@@ -186,6 +186,10 @@ int insertBefore(list* l, unsigned n, int value) {
 //вывод всех значений из списка в прямом порядке
 void print(list* l) {
     node_t* cursor = l->head;
+    
+    if (cursor == NULL){
+        return;
+    }
 
     while (cursor->next != NULL) {
         printf("%d ", cursor->value);
@@ -198,6 +202,11 @@ void print(list* l) {
 void print_invers(list* l)
 {
     node_t *cursor = l->tail;
+    
+    if (cursor == NULL){
+        return;
+    }
+    
     while (cursor->prev!=NULL) {
         printf("%d ", cursor->value);
         cursor = cursor->prev;
@@ -257,7 +266,7 @@ int main()
     insertAfter(&l,j,x);
     print_invers(&l);
 
-    //удаление определенного элемента
+    //вставка значения y перед указанным узлом u
     int u,y;
     printf("Введите число u:"); scanf("%d",&u);
     printf("Введите число y:"); scanf("%d",&y);
