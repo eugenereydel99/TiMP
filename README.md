@@ -35,6 +35,9 @@ $ git push -u origin pr3
 <h3>Результаты</h3>
 <p>Результат работы программы с односвязным списком:</p>
 <a href="https://ibb.co/jbDZyZw"><img src="https://i.ibb.co/4Kpg8gS/2019-03-14-10-57-37.png" alt="2019-03-14-10-57-37" border="0"></a>
+<p>Результат работы программы с двусвязным списком:</p>
+<a href="https://ibb.co/CnrQPFr"><img src="https://i.ibb.co/Ytrh0Gr/2019-03-16-01-55-33.png" alt="2019-03-16-01-55-33" border="0"></a>
+
 <h3>Таблица</h3>
 
 |Ресурс|Ссылка|
