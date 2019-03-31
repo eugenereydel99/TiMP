@@ -243,41 +243,97 @@ int _remove(tree *t, int value)
 }
 
 
-//удаление минимального элемента
-int removeMin(node *n, tree *t)
+//поиск минимального значения
+node *min(node *root)
 {
-    if (t->count == 1)
-    {
-        t->root = NULL;
-        t->count = 0;
-        free(t->root);
-        return 0;
-    }
-    while(n->left)
-        n = n->left;
-    if (n->right)
-    {
-        n->right->parent = n->parent;
-        if (n == t->root)
-            t->root = n->right;
-        else
-            n->parent->left=n->right;
-    }
-    else
-    {
-        n->parent->left = NULL;
-    }
-    int m = n->value;
-    free(n);
-    t->count--;
-    return m;
+    node *l=root;
+    while (l->left!=NULL)
+        l=l->left;
+    return l;
 }
 
-//удаление всех элементов дерева
-void clear(tree *t)
+//поиск следующего элемента
+node *next(node *root)
 {
-    while (t->root)
-        removeMin(t->root, t);
+    node *p = malloc(sizeof(node));
+    p=root->parent;
+    node *l = NULL;
+
+    if (p->right!=NULL){
+        return min(p->right);
+    }
+    l=p->parent;
+    while ((l != NULL) && (p == l -> right)){
+        p=l;
+        l=l->parent;
+    }
+    return l;
+}
+
+//удаление минимального значения
+void clearMinNode(node *n)
+{
+
+    node *tmp = malloc(sizeof(node));
+    tmp=n->parent;
+
+    if ((n->left == NULL && n->right == NULL)){
+        if (tmp->left==n){
+            tmp->left=NULL;
+        }
+        if (tmp->right==n){
+            tmp->right=NULL;
+        }
+    }
+    else if (n->left == NULL || n->right == NULL) {
+        if (n->left == NULL){
+            if (tmp->left==n){
+                tmp->left=n->right;
+            }else {
+                tmp->right=n->right;
+            }
+            n->right->parent=tmp;
+        }
+        else {
+            if (tmp->left==n){
+                tmp->left=n->left;
+            }else{
+                tmp->right=n->left;
+            }
+            n->left->parent=tmp;
+        }
+    }
+    else {
+        node *p = next(tmp);
+        n->value=p->value;
+        if (p->parent->left==p){
+            p->parent->left=p->right;
+            if (p->right!=NULL)
+                p->right->parent=p->parent;
+        }
+        else {
+            p->parent->right=p->left;
+            if (p->left != NULL)
+                p->right->parent=p->parent;
+        }
+    }
+}
+
+//очистка всего дерева
+void clearTree(tree *t)
+{
+
+    while (t){
+        if (t->root==NULL)
+            break;
+        else {
+            clearMinNode(t->root);
+            free(t);
+        }
+    }
+    t->root=NULL;
+    t->count=0;
+
 }
 
 //правое вращения поддерева
@@ -473,7 +529,7 @@ int main()
 
     printf("%d\n", t.count);
 
-    clear(&t);
+    clearTree(&t);
     printTree(&t);
 
     return 0;
