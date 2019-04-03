@@ -3,7 +3,7 @@
 
 static int k=0; //счетчик количества перестановок
 
-int quickSort(int *arr,int low,int high)
+int quickSort(int *arr,int low,int high,int size)
 {
     if (low < high)
         {
@@ -24,8 +24,8 @@ int quickSort(int *arr,int low,int high)
                     k++;
                 }
             } while (left <= right);
-            quickSort(arr, low, right);
-            quickSort(arr, left, high);
+            quickSort(arr, low, right,size);
+            quickSort(arr, left, high,size);
         }
 
     return k;
@@ -45,7 +45,7 @@ int main()
         scanf("%d",&arr[i]);
     }
 
-    quickSort(arr,0,n-1); //сортировка
+    quickSort(arr,0,n-1,n); //сортировка
 
     for (i=0;i<n;i++) {
         printf("%d ", arr[i]);
